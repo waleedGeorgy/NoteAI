@@ -1,4 +1,5 @@
 import Link from "next/link";
+import { BrainCircuit, LockKeyhole, LogIn, UserPlus } from "lucide-react";
 
 const HomePage = async () => {
   return (
@@ -11,27 +12,26 @@ const HomePage = async () => {
         <div className="mt-8 flex flex-wrap items-center justify-center gap-3">
           <Link
             href="/login"
-            className="rounded-xl bg-indigo-600 px-5 py-2.5 text-sm font-medium text-gray-100 shadow-[inset_0_1px_0_rgba(255,255,255,0.08),0_12px_20px_rgba(0,0,0,0.4)] transition hover:bg-indigo-500 focus:outline-none focus:ring-2 focus:ring-indigo-400/70 w-28"
+            className="rounded-xl bg-indigo-600 px-5 py-2.5 text-sm font-medium text-gray-100 shadow-[inset_0_1px_0_rgba(255,255,255,0.08),0_12px_20px_rgba(0,0,0,0.4)] transition hover:bg-indigo-500 focus:outline-none focus:ring-2 focus:ring-indigo-400/70 flex items-center justify-center gap-2"
           >
-            Log in
+            <LogIn className="size-5" />Log in
           </Link>
           <Link
             href="/signup"
-            className="rounded-xl border border-white/10 bg-white/5 px-5 py-2.5 text-sm font-medium text-gray-100 backdrop-blur-xl transition hover:bg-white/10 focus:outline-none focus:ring-2 focus:ring-white/20"
+            className="rounded-xl border border-white/10 bg-white/5 px-5 py-2.5 text-sm font-medium text-gray-100 backdrop-blur-xl transition hover:bg-white/10 focus:outline-none focus:ring-2 focus:ring-white/20 flex items-center justify-center gap-2"
           >
-            Create account
+            <UserPlus className="size-5" />Create account
           </Link>
         </div>
-        <div className="mt-12 grid grid-cols-1 gap-3 sm:grid-cols-2 max-w-lg mx-auto">
-          {[
-            ['Secure by default', 'Row Level Security via Supabase'],
-            ['AI summaries', 'Turn long notes into quick insights'],
-          ].map(([title, desc]) => (
-            <div key={title} className="rounded-2xl border border-white/10 bg-white/5 p-4 text-left backdrop-blur-xl">
-              <h3 className="text-sm font-medium text-gray-200">{title}</h3>
-              <p className="mt-1 text-xs text-gray-400">{desc}</p>
-            </div>
-          ))}
+        <div className="mt-12 grid grid-cols-1 gap-3 sm:grid-cols-2 max-w-xl mx-auto">
+          <div className="rounded-xl border border-white/10 bg-white/5 p-5 text-left backdrop-blur-xl">
+            <h3 className="font-semibold text-gray-200 flex items-center gap-2"><LockKeyhole className="size-5" />Secure by default</h3>
+            <p className="mt-1 text-sm text-gray-400">Row Level Security via Supabase</p>
+          </div>
+          <div className="rounded-xl border border-white/10 bg-white/5 p-5 text-left backdrop-blur-xl">
+            <h3 className="font-semibold text-gray-200 flex items-center gap-2"><BrainCircuit className="size-5" />AI summaries</h3>
+            <p className="mt-1 text-sm text-gray-400">Turn long notes into quick insights</p>
+          </div>
         </div>
       </div>
     </section>

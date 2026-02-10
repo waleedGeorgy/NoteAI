@@ -1,29 +1,34 @@
 import { useFormStatus } from "react-dom";
+import { Loader2, Trash2 } from "lucide-react";
 
 const DeleteButton = ({
     isNoteDeleting,
-    text,
-    noteId,
-    deletingNoteId
+    currentNoteId,
+    deletingNoteId,
+    isNoteUpdating,
 }: {
     isNoteDeleting: boolean;
-    text: string;
-    noteId?: string;
+    currentNoteId?: string;
+    isNoteUpdating?: boolean
     deletingNoteId?: string | null;
 }) => {
-    // Use useFormStatus for pending state within the form
     const { pending } = useFormStatus();
 
-    // Check if this specific note is being deleted
-    const isDeletingThisNote = pending || (isNoteDeleting && deletingNoteId === noteId);
+    const isDeletingThisNote = pending || (isNoteDeleting && deletingNoteId === currentNoteId);
 
     return (
         <button
-            className="rounded-lg border border-orange-600/30 bg-orange-600/10 px-3.5 py-2 text-sm text-orange-100 hover:bg-orange-600/20 focus:outline-none focus:ring-2 focus:ring-orange-600/40 transition-colors duration-200 disabled:opacity-50 disabled:cursor-not-allowed"
-            disabled={isDeletingThisNote}
+            className="rounded-lg border border-red-600/30 bg-red-600/10 px-3 py-2 text-xs text-red-100 hover:bg-red-600/20 focus:outline-none focus:ring-2 focus:ring-red-600/40 transition-colors duration-200 disabled:opacity-50 disabled:cursor-not-allowed"
+            disabled={isDeletingThisNote || isNoteUpdating}
             type="submit"
+            aria-label="Delete note"
+            title="Delete note"
         >
-            {isDeletingThisNote ? "Deleting..." : text}
+            {isDeletingThisNote ?
+                <Loader2 className="size-4 animate-spin" />
+                :
+                <Trash2 className="size-4" />
+            }
         </button>
     );
 }

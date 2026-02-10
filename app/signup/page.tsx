@@ -7,7 +7,7 @@ import { createToast } from "@/utils/createToast";
 import { redirect } from "next/navigation";
 
 const SignupPage = () => {
-    const [signupState, signupAction] = useActionState(signup, null);
+    const [signupState, signupAction, isSigningUp] = useActionState(signup, null);
 
     useEffect(() => {
         if (signupState?.emailError) createToast("error", signupState.emailError);
@@ -31,14 +31,14 @@ const SignupPage = () => {
                     <form action={signupAction} className="space-y-4">
                         <div className="space-y-1.5">
                             <label htmlFor="email" className="block text-sm text-zinc-300">Email</label>
-                            <input id="email" name="email" type="email" autoComplete="email" autoFocus
+                            <input id="email" name="email" type="email" autoComplete="email" autoFocus disabled={isSigningUp}
                                 placeholder="john.doe@domain.com"
                                 className="w-full rounded-xl bg-zinc-900/70 px-3 py-2.5 text-gray-100 outline-none ring-1 ring-white/10 transition focus:ring-2 focus:ring-indigo-500/80 placeholder:text-gray-500" />
                         </div>
 
                         <div className="space-y-1.5">
                             <label htmlFor="password" className="block text-sm text-zinc-300">Password</label>
-                            <input id="password" name="password" type="password" autoComplete="off"
+                            <input id="password" name="password" type="password" autoComplete="off" disabled={isSigningUp}
                                 placeholder="Create a strong password"
                                 className="w-full rounded-xl bg-zinc-900/70 px-3 py-2.5 text-gray-100 outline-none ring-1 ring-white/10 transition focus:ring-2 focus:ring-indigo-500/80 placeholder:text-gray-500" />
                         </div>
@@ -47,7 +47,7 @@ const SignupPage = () => {
 
                         <div className="flex items-center justify-center pt-2">
                             <p className="text-sm text-gray-400">Already have an account?</p>
-                            <Link href="/login" className="text-sm font-semibold text-gray-100 underline-offset-4 transition hover:text-indigo-400 focus:outline-none focus:ring-2 focus:ring-indigo-400/40 rounded-md px-1">
+                            <Link href="/login" className={`text-sm font-semibold text-gray-100 underline-offset-4 transition hover:text-indigo-500 focus:outline-none focus:ring-2 focus:ring-indigo-400/40 rounded-md px-1 ${isSigningUp && "pointer-events-none opacity-20"}`}>
                                 Log in
                             </Link>
                         </div>

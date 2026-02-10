@@ -1,13 +1,15 @@
 // app/components/Modal.tsx
 'use client'
+import { X } from 'lucide-react';
 
 interface ModalProps {
     isOpen: boolean;
+    isNoteAdding: boolean;
     onClose: () => void;
     children: React.ReactNode;
 }
 
-const Modal = ({ isOpen, onClose, children }: ModalProps) => {
+const Modal = ({ isOpen, isNoteAdding, onClose, children }: ModalProps) => {
     if (!isOpen) return null;
 
     return (
@@ -22,10 +24,9 @@ const Modal = ({ isOpen, onClose, children }: ModalProps) => {
                     onClick={onClose}
                     className="absolute right-4 top-4 text-gray-400 hover:text-gray-100 transition-colors"
                     aria-label="Close"
+                    disabled={isNoteAdding}
                 >
-                    <svg className="size-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
-                    </svg>
+                    <X className='size-6' />
                 </button>
                 {children}
             </div>

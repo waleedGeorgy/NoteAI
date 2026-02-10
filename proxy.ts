@@ -12,10 +12,15 @@ export async function proxy(request: NextRequest) {
   const { nextUrl } = request;
   const pathname = nextUrl.pathname;
 
-  const protectedRoutes = ["/dashboard", "/notes/*"];
+  const protectedRoutes = ["/dashboard", "/notes"];
   const authRoutes = ["/signup", "/login", "/"];
 
-  const isProtectedRoute = protectedRoutes.includes(pathname);
+  const isProtectedRoute = protectedRoutes.some((pattern) => {
+    if (pattern === pathname) return true;
+    if (pattern === "/notes" && pathname.startsWith("/notes/")) return true;
+    return false;
+  });
+
   const isAuthRoute = authRoutes.includes(pathname);
 
   if (!isAuthenticated && isProtectedRoute) {

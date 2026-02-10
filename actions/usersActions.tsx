@@ -27,7 +27,7 @@ export const login = async (prevState: unknown, formData: FormData): Promise<Aut
 
     const { error } = await supabase.auth.signInWithPassword({ email, password });
     if (error) {
-        res.supabaseError = error.message + " | " + error.name;
+        res.supabaseError = error.message + ". Please try again.";
         return res;
     }
 
@@ -54,7 +54,7 @@ export const signup = async (prevState: unknown, formData: FormData): Promise<Au
 
     const { error } = await supabase.auth.signUp({ email, password });
     if (error) {
-        res.supabaseError = error.message + " | " + error.name;
+        res.supabaseError = error.message + ". Please try again.";
         return res;
     }
 
@@ -69,7 +69,7 @@ export const logout = async (): Promise<AuthActionsResponses> => {
     const res = {} as AuthActionsResponses;
 
     if (error) {
-        res.supabaseError = error.message;
+        res.supabaseError = error.message + ". Please try again.";
         return res;
     }
 

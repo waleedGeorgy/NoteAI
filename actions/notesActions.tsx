@@ -8,7 +8,8 @@ type NotesActionsResponses = {
     titleError?: string,
     contentError?: string,
     supabaseError?: string,
-    success?: string
+    success?: string,
+    id?: string,
 }
 
 export const addNote = async (prevState: unknown, formData: FormData): Promise<NotesActionsResponses> => {
@@ -31,7 +32,7 @@ export const addNote = async (prevState: unknown, formData: FormData): Promise<N
 
     const { error } = await supabase.from("notes").insert({ title, content, user_id: data.user?.id });
     if (error) {
-        res.supabaseError = error.message;
+        res.supabaseError = error.message + ". Please try again.";
         return res;
     } else {
         res.success = "Note added successfully";
@@ -62,7 +63,7 @@ export const updateNote = async (prevState: unknown, formData: FormData): Promis
 
     const { error } = await supabase.from("notes").update({ title, content }).eq('id', id).eq('user_id', data.user?.id);
     if (error) {
-        res.supabaseError = error.message;
+        res.supabaseError = error.message + ". Please try again.";
         return res;
     }
 
@@ -83,11 +84,12 @@ export const deleteNote = async (prevState: unknown, formData: FormData): Promis
 
     const { error } = await supabase.from("notes").delete().eq('id', id).eq('user_id', data.user?.id);
     if (error) {
-        res.supabaseError = error.message;
+        res.supabaseError = error.message + ". Please try again.";
         return res;
     }
 
     res.success = "Note deleted successfully";
+    res.id = id;
     revalidatePath("/dashboard");
     return res;
 }
