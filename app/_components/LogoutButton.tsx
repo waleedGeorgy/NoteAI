@@ -1,26 +1,26 @@
 'use client'
 import { useActionState, useEffect } from "react";
 import { redirect } from "next/navigation";
+import { Loader2, LogOut } from "lucide-react";
 import { logout } from "@/actions/usersActions"
 import { createToast } from "@/utils/createToast";
-import { Loader2, LogOut } from "lucide-react";
 
 const LogoutButton = ({ disabled }: { disabled: boolean }) => {
-  const [logoutResponse, logoutAction, isLoggingOut] = useActionState(logout, null);
+  const [logoutState, logoutAction, isLoggingOut] = useActionState(logout, null);
 
   useEffect(() => {
-    if (logoutResponse?.supabaseError) createToast("error", logoutResponse.supabaseError);
-    else if (logoutResponse?.success) {
-      createToast("success", logoutResponse.success);
+    if (logoutState?.supabaseError) createToast("error", logoutState.supabaseError);
+    else if (logoutState?.success) {
+      createToast("success", logoutState.success);
       redirect("/login");
     }
-  }, [logoutResponse]);
+  }, [logoutState]);
 
   return (
     <form action={logoutAction}>
       <button
         className="rounded-lg border border-orange-600/30 bg-orange-600/10 px-4 py-2 text-sm text-orange-100 hover:bg-orange-600/20 focus:outline-none focus:ring-2 focus:ring-orange-600/40 transition-colors duration-200 disabled:pointer-events-none disabled:opacity-50"
-        disabled={disabled}
+        disabled={disabled || isLoggingOut}
       >
         {isLoggingOut ? (
           <div>

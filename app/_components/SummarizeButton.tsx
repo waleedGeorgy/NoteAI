@@ -1,5 +1,4 @@
 'use client'
-import { useState } from 'react';
 import { Sparkles } from 'lucide-react';
 import puter from '@heyputer/puter.js';
 import { createNoteSummary } from '@/actions/notesActions';
@@ -9,6 +8,7 @@ interface SummarizeButtonProps {
     noteId: string;
     content: string;
     onSummaryGenerated: (summary: string) => void;
+    setIsSummarizing: (summarizationState: boolean) => void;
     disabled?: boolean;
 }
 
@@ -16,9 +16,9 @@ const SummarizeButton = ({
     noteId,
     content,
     onSummaryGenerated,
+    setIsSummarizing,
     disabled
 }: SummarizeButtonProps) => {
-    const [isSummarizing, setIsSummarizing] = useState<boolean>(false);
 
     const handleSummarize = async () => {
         setIsSummarizing(true);
@@ -60,8 +60,8 @@ const SummarizeButton = ({
         <button
             type="button"
             onClick={handleSummarize}
-            aria-busy={disabled || !content.trim() || isSummarizing}
-            disabled={disabled || !content.trim() || isSummarizing}
+            aria-busy={disabled || !content.trim() || content.trim().length === 0}
+            disabled={disabled || !content.trim() || content.trim().length === 0}
             className="group relative inline-flex items-center justify-center px-4 py-2 bg-gray-900 border border-gray-700 rounded-lg hover:border-cyan-400/50 transition-all duration-200 disabled:opacity-50 disabled:cursor-not-allowed text-xs"
         >
             <div className="absolute inset-0 rounded-lg bg-linear-to-r from-cyan-500/5 via-transparent to-purple-500/5 opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
@@ -73,8 +73,8 @@ const SummarizeButton = ({
                     <div className="absolute inset-0 bg-cyan-500 rounded-full blur-sm opacity-0 group-hover:opacity-50 transition-opacity"></div>
                 </div>
                 <span className="bg-linear-to-r from-cyan-300 to-blue-300 bg-clip-text text-transparent font-semibold flex items-center gap-1.5">
-                    <Sparkles className={`size-4 z-10 text-cyan-300 ${isSummarizing && 'animate-pulse'}`} />
-                    {isSummarizing ? 'Summarizing...' : 'Summarize'}
+                    <Sparkles className="size-4 text-cyan-300" />
+                    {disabled ? 'Summarizing...' : 'Summarize'}
                 </span>
             </div>
         </button>

@@ -24,7 +24,7 @@ const LoginPage = () => {
             <div className="w-full max-w-md rounded-2xl border border-white/10 bg-white/5 backdrop-blur-xl shadow-[0_10px_50px_rgba(0,0,0,0.45)]">
                 <div className="border-b border-white/10 px-8 py-6">
                     <h2 className="text-2xl font-semibold tracking-tight text-center">Welcome back</h2>
-                    <p className="text-sm text-gray-400 text-center mt-1">Log in to continue with NoteAI</p>
+                    <p className="text-sm text-gray-400 text-center mt-1">Log in to continue with Mnemo.ai</p>
                 </div>
 
                 <div className="px-8 py-6">

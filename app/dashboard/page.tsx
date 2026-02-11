@@ -1,8 +1,10 @@
 'use client'
 import { useActionState, useEffect, useState } from "react";
 import Link from "next/link";
+import Image from "next/image";
 import { useRouter } from "next/navigation";
 import { Edit, Loader2, PlusCircle, Sparkles, User } from "lucide-react";
+import { formatDistanceToNow } from "date-fns";
 import { addNote, deleteNote } from "@/actions/notesActions";
 import { supabase } from "@/utils/supabase/client";
 import { createToast } from "@/utils/createToast";
@@ -11,7 +13,7 @@ import LogoutButton from "../_components/LogoutButton";
 import SubmitButton from "../_components/SubmitButton";
 import Modal from "../_components/Modal";
 import DeleteButton from "../_components/DeleteButton";
-
+import Logo from "@/app/icon.png";
 
 const DashboardPage = () => {
     const [userEmail, setUserEmail] = useState<string>('');
@@ -20,10 +22,10 @@ const DashboardPage = () => {
     const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
     const [deletingNoteId, setDeletingNoteId] = useState<string>();
 
-    const router = useRouter();
-
     const [addNotesState, addNotesAction, isNoteAdding] = useActionState(addNote, {});
     const [noteDeleteState, noteDeleteAction, isNoteDeleting] = useActionState(deleteNote, null);
+
+    const router = useRouter();
 
     useEffect(() => {
         const getCurrentUser = async () => {
@@ -79,16 +81,19 @@ const DashboardPage = () => {
         <section className="relative mx-auto max-w-7xl p-8">
             <div className="flex gap-2 mb-8 items-center justify-between">
                 <div>
-                    <h2 className="text-2xl font-semibold">Your Notes</h2>
+                    <div className="flex items-center gap-2">
+                        <Image src={Logo} alt="Mnemo.ai logo" width={28} height={28} />
+                        <h2 className="text-2xl font-semibold">Your Notes</h2>
+                    </div>
                     {!userEmail ?
                         <div className="flex items-center gap-1.5">
                             <Loader2 className="size-5 animate-spin text-gray-500" />
                             <span className="font-light text-gray-500">Loading user info</span>
                         </div>
                         :
-                        <div className="flex items-center gap-1.5">
-                            <User className="size-5" />
-                            <span className="text-indigo-500 font-semibold">{userEmail}</span>
+                        <div className="flex items-center gap-1 text-indigo-400">
+                            <User className="size-4" />
+                            <span>{userEmail}</span>
                         </div>
                     }
                 </div>
@@ -142,7 +147,7 @@ const DashboardPage = () => {
                     </div>
                     <div className="pt-2">
                         <div className="flex gap-3">
-                            <SubmitButton pendingText="Adding...">
+                            <SubmitButton pendingText="Adding..." disabled={isNoteAdding || isNoteDeleting}>
                                 Add note
                             </SubmitButton>
                             <button
@@ -167,17 +172,19 @@ const DashboardPage = () => {
                     You don&apos;t have any notes yet. Click on &quot;Add Note&quot; to create one.
                 </div>)
                 :
-                (<ul className="grid grid-cols-1 gap-4 lg:grid-cols-3 md:grid-cols-2 items-start">
+                (<ul className="grid grid-cols-1 gap-4 md:grid-cols-2 items-start">
                     {notes?.map((note) => (
                         <li
-                            className="rounded-lg border border-white/10 bg-white/5 px-5 py-4 backdrop-blur-xl hover:bg-linear-to-br hover:from-white/8 hover:to-indigo-500/15 transition duration-300"
+                            className="rounded-lg border border-white/10 bg-white/5 px-5 py-4 backdrop-blur-xl hover:bg-linear-to-br hover:from-white/7 hover:to-indigo-500/15 transition duration-300 group"
                             key={note.id}
                         >
                             <div className="flex items-start justify-between gap-2">
-                                <p className="text-xl font-semibold text-gray-100 line-clamp-3">{note.title}</p>
+                                <Link href={`/notes/${note.id}`} className="text-xl font-semibold text-gray-100 line-clamp-2 group-hover:underline underline-offset-2 group-hover:text-indigo-300">
+                                    {note.title}
+                                </Link>
                                 <div className="flex items-center gap-1.5">
                                     {note.summary && <Sparkles className="size-4 text-indigo-400 mr-1" />}
-                                    <Link href={`/notes/${note.id}`} className={`rounded-lg border border-emerald-600/30 bg-emerald-600/10 px-3 py-2 text-xs text-emerald-100 hover:bg-emerald-600/20 focus:outline-none focus:ring-2 focus:ring-emerald-600/40 transition-colors duration-200 disabled:opacity-50 disabled:cursor-not-allowed cursor-auto ${isNoteDeleting && "pointer-events-none opacity-50"}`} title="Edit note" aria-disabled={isNoteDeleting}>
+                                    <Link href={`/notes/${note.id}`} className={`rounded-lg border border-indigo-500/30 bg-indigo-500/15 px-3 py-2 text-xs text-indigo-100 hover:bg-indigo-500/20 focus:outline-none focus:ring-2 focus:ring-indigo-500/40 transition-colors duration-200 disabled:opacity-50 disabled:cursor-not-allowed ${isNoteDeleting && "pointer-events-none opacity-50"}`} title="Edit note" aria-disabled={isNoteDeleting}>
                                         <Edit className="size-4 " />
                                     </Link>
                                     <form action={noteDeleteAction}>
@@ -193,16 +200,15 @@ const DashboardPage = () => {
                             <p className="mt-4 line-clamp-3 text-gray-300 whitespace-pre-wrap">
                                 {note.content}
                             </p>
-                            <div className="mt-7 text-xs text-gray-400 flex flex-col gap-0.5 items-end">
+                            <div className="mt-7 text-xs text-gray-400 flex flex-col gap-1 items-end font-mono">
                                 <time>
                                     <span className="font-semibold">Created at:</span>{" "}
                                     {new Date(note.created_at).toLocaleString('en-GB', { year: 'numeric', month: 'long', day: 'numeric', hour: "2-digit", minute: "numeric" })}
                                 </time>
                                 {note.created_at !== note.updated_at &&
                                     <time>
-                                        <span className="font-semibold">Last updated at:</span>{" "}
-                                        {new Date(note.updated_at).toLocaleString('en-GB', { year: 'numeric', month: 'long', day: 'numeric', hour: "2-digit", minute: "numeric" })}
-                                    </time>
+                                        <span className="font-semibold">Last updated:</span>{" "}
+                                        {formatDistanceToNow(new Date(note.updated_at), { addSuffix: true })}                                    </time>
                                 }
                             </div>
                         </li>

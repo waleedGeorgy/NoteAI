@@ -3,8 +3,8 @@ import toast from "react-hot-toast";
 export const createToast = (type: "success" | "error", message: string) => {
   const toastDarkMode = {
     borderRadius: "10px",
-    backgroundColor: "#333",
-    color: "#fff",
+    backgroundColor: "#1f2937",
+    color: "#e5e7eb",
   };
 
   switch (type) {

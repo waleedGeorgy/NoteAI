@@ -1,13 +1,18 @@
 import Link from "next/link";
 import { BrainCircuit, LockKeyhole, LogIn, UserPlus } from "lucide-react";
+import Image from "next/image";
+import Logo from "@/app/icon.png";
 
 const HomePage = async () => {
   return (
     <section className="relative mx-auto flex min-h-screen max-w-7xl items-center justify-center p-6">
       <div className="w-full max-w-3xl text-center">
-        <h1 className="mt-6 text-5xl font-semibold tracking-tight sm:text-6xl">NoteAI</h1>
+        <div className="flex items-center justify-center gap-2">
+          <Image src={Logo} alt="Mnemo.ai logo" width={46} height={46} />
+          <h1 className="text-5xl font-semibold tracking-tight sm:text-6xl">Mnemo.ai</h1>
+        </div>
         <p className="mx-auto mt-3 max-w-2xl text-gray-300">
-          Take your notes, and let AI handle the rest. Start off by signing in for free.
+          Take your notes, and let AI handle the rest. Start off by creating an account for free, or continue from where you left off by logging in.
         </p>
         <div className="mt-8 flex flex-wrap items-center justify-center gap-3">
           <Link

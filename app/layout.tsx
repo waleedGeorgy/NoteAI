@@ -14,8 +14,8 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "NoteAI",
-  description: "Takes notes with the help of AI",
+  title: "Mnemo.ai",
+  description: "Take notes with the help of AI",
 };
 
 export default function RootLayout({
@@ -28,9 +28,9 @@ export default function RootLayout({
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
-        <main className="relative min-h-screen bg-[radial-gradient(100%_80%_at_50%_0%,#0b1220_0%,#0a0a0b_60%,#060607_100%)] text-gray-200">
+        <main className="relative min-h-screen bg-[radial-gradient(100%_80%_at_50%_0%,#0b1220_0%,#0a0a0b_60%,#060607_100%)] text-gray-200 font-sans">
           {children}
-          <Toaster position="bottom-right" reverseOrder={true} />
+          <Toaster position="top-center" reverseOrder={true} />
         </main>
       </body>
     </html>
