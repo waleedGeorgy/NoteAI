@@ -52,3 +52,8 @@ body {
 .animate-slideUp {
   animation: slideUp 0.3s ease-out;
 }
+
+a,
+button {
+  cursor: pointer;
+}

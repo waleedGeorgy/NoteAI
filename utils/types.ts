@@ -3,6 +3,8 @@ export type Note = {
   user_id?: string;
   title: string;
   content: string;
+  summary?: string;
+  summarized_at?: string;
   created_at: string;
   updated_at: string;
 };

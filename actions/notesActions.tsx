@@ -61,7 +61,7 @@ export const updateNote = async (prevState: unknown, formData: FormData): Promis
         return res;
     }
 
-    const { error } = await supabase.from("notes").update({ title, content }).eq('id', id).eq('user_id', data.user?.id);
+    const { error } = await supabase.from("notes").update({ title, content, summary: null }).eq('id', id).eq('user_id', data.user?.id);
     if (error) {
         res.supabaseError = error.message + ". Please try again.";
         return res;
@@ -92,4 +92,30 @@ export const deleteNote = async (prevState: unknown, formData: FormData): Promis
     res.id = id;
     revalidatePath("/dashboard");
     return res;
+}
+
+export async function createNoteSummary(id: string, summary: string) {
+    const supabase = await createClient();
+    if (!id || !summary) {
+        throw new Error('Missing note ID or summary');
+    }
+
+    try {
+        const { error } = await supabase
+            .from('notes')
+            .update({
+                summary,
+                summarized_at: new Date().toISOString()
+            })
+            .eq('id', id);
+
+        if (error) {
+            throw new Error(error.message);
+        }
+
+        return { success: true, summary };
+    } catch (error) {
+        console.error('Error saving summary:', error);
+        throw error;
+    }
 }

@@ -2,7 +2,7 @@
 import { useActionState, useEffect, useState } from "react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
-import { Edit, Loader2, PlusCircle, User } from "lucide-react";
+import { Edit, Loader2, PlusCircle, Sparkles, User } from "lucide-react";
 import { addNote, deleteNote } from "@/actions/notesActions";
 import { supabase } from "@/utils/supabase/client";
 import { createToast } from "@/utils/createToast";
@@ -38,7 +38,7 @@ const DashboardPage = () => {
             setIsNotesLoading(true);
             const { data: dbNotes, error } = await supabase
                 .from("notes")
-                .select("id, title, content, created_at, updated_at")
+                .select("id, title, content, created_at, updated_at, summary")
                 .order("created_at", { ascending: false });
 
             if (error) {
@@ -176,6 +176,7 @@ const DashboardPage = () => {
                             <div className="flex items-start justify-between gap-2">
                                 <p className="text-xl font-semibold text-gray-100 line-clamp-3">{note.title}</p>
                                 <div className="flex items-center gap-1.5">
+                                    {note.summary && <Sparkles className="size-4 text-indigo-400 mr-1" />}
                                     <Link href={`/notes/${note.id}`} className={`rounded-lg border border-emerald-600/30 bg-emerald-600/10 px-3 py-2 text-xs text-emerald-100 hover:bg-emerald-600/20 focus:outline-none focus:ring-2 focus:ring-emerald-600/40 transition-colors duration-200 disabled:opacity-50 disabled:cursor-not-allowed cursor-auto ${isNoteDeleting && "pointer-events-none opacity-50"}`} title="Edit note" aria-disabled={isNoteDeleting}>
                                         <Edit className="size-4 " />
                                     </Link>
@@ -189,7 +190,7 @@ const DashboardPage = () => {
                                     </form>
                                 </div>
                             </div>
-                            <p className="mt-4 line-clamp-5 text-gray-300 whitespace-pre-wrap">
+                            <p className="mt-4 line-clamp-3 text-gray-300 whitespace-pre-wrap">
                                 {note.content}
                             </p>
                             <div className="mt-7 text-xs text-gray-400 flex flex-col gap-0.5 items-end">

@@ -24,13 +24,13 @@ const HomePage = async () => {
           </Link>
         </div>
         <div className="mt-12 grid grid-cols-1 gap-3 sm:grid-cols-2 max-w-xl mx-auto">
-          <div className="rounded-xl border border-white/10 bg-white/5 p-5 text-left backdrop-blur-xl">
-            <h3 className="font-semibold text-gray-200 flex items-center gap-2"><LockKeyhole className="size-5" />Secure by default</h3>
-            <p className="mt-1 text-sm text-gray-400">Row Level Security via Supabase</p>
+          <div className="rounded-xl border border-white/10 bg-white/5 px-5 py-4 text-left backdrop-blur-xl space-y-1.5">
+            <h3 className="font-semibold text-gray-200 flex items-center gap-2"><LockKeyhole className="size-4" />Secure by default</h3>
+            <p className="text-sm text-gray-400">Row Level Security via Supabase.</p>
           </div>
-          <div className="rounded-xl border border-white/10 bg-white/5 p-5 text-left backdrop-blur-xl">
-            <h3 className="font-semibold text-gray-200 flex items-center gap-2"><BrainCircuit className="size-5" />AI summaries</h3>
-            <p className="mt-1 text-sm text-gray-400">Turn long notes into quick insights</p>
+          <div className="rounded-xl border border-white/10 bg-white/5 px-5 py-4 text-left backdrop-blur-xl space-y-1.5">
+            <h3 className="font-semibold text-gray-200 flex items-center gap-2"><BrainCircuit className="size-4" />AI summaries</h3>
+            <p className="text-sm text-gray-400">Turn long notes into quick insights.</p>
           </div>
         </div>
       </div>
