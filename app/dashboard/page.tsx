@@ -184,7 +184,7 @@ const DashboardPage = () => {
                                 </Link>
                                 <div className="flex items-center gap-1.5">
                                     {note.summary && <Sparkles className="size-4 text-indigo-400 mr-1" />}
-                                    <Link href={`/notes/${note.id}`} className={`rounded-lg border border-indigo-500/30 bg-indigo-500/15 px-3 py-2 text-xs text-indigo-100 hover:bg-indigo-500/20 focus:outline-none focus:ring-2 focus:ring-indigo-500/40 transition-colors duration-200 disabled:opacity-50 disabled:cursor-not-allowed ${isNoteDeleting && "pointer-events-none opacity-50"}`} title="Edit note" aria-disabled={isNoteDeleting}>
+                                    <Link href={`/notes/${note.id}`} className={`rounded-lg border border-indigo-500/30 bg-indigo-500/25 px-3 py-2 text-xs text-indigo-100 hover:bg-indigo-500/35 focus:outline-none focus:ring-2 focus:ring-indigo-500/40 transition-colors duration-200 disabled:opacity-50 disabled:cursor-not-allowed ${isNoteDeleting && "pointer-events-none opacity-50"}`} title="Edit note" aria-disabled={isNoteDeleting}>
                                         <Edit className="size-4 " />
                                     </Link>
                                     <form action={noteDeleteAction}>

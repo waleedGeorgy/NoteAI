@@ -20,7 +20,7 @@ const SubmitButton = ({ pendingText, children, disabled }: SubmitButtonProps) =>
                 `inline-flex w-full items-center justify-center rounded-xl px-4 py-2.5 text-sm 
                 text-gray-100 shadow-[inset_0_1px_0_rgba(255,255,255,0.08),0_10px_20px_rgba(0,0,0,0.35)]
                 transition focus:outline-none focus:ring-2 focus:ring-indigo-400/70
-                ${pending || disabled ? 'opacity-60 pointer-events-none' : 'rounded-lg border border-indigo-500/30 bg-indigo-500/15 px-4 py-2 text-sm text-indigo-100 hover:bg-indigo-500/20 focus:outline-none focus:ring-2 focus:ring-indigo-500/40 transition-colors duration-200'} `
+                ${pending || disabled ? 'opacity-60 pointer-events-none' : 'rounded-lg border border-indigo-500/30 bg-indigo-500/25 px-4 py-2 text-sm text-indigo-100 hover:bg-indigo-500/35 focus:outline-none focus:ring-2 focus:ring-indigo-500/40 transition-colors duration-200'} `
             }
         >
             {pending && (
