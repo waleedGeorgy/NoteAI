@@ -10,6 +10,7 @@ interface SummarizeButtonProps {
     onSummaryGenerated: (summary: string) => void;
     setIsSummarizing: (summarizationState: boolean) => void;
     disabled?: boolean;
+    isSummarizing?: boolean;
 }
 
 const SummarizeButton = ({
@@ -17,7 +18,8 @@ const SummarizeButton = ({
     content,
     onSummaryGenerated,
     setIsSummarizing,
-    disabled
+    disabled,
+    isSummarizing
 }: SummarizeButtonProps) => {
 
     const handleSummarize = async () => {
@@ -32,15 +34,10 @@ const SummarizeButton = ({
         try {
             const response = await puter.ai.chat(`Summarize the following note concisely and expertly while preserving the key points and answering any questions:\n\n${content}`);
 
-            let summary: unknown = '';
-            if (typeof response === 'string') {
-                summary = response;
-            } else if (response) {
-                summary = response.message?.content || JSON.stringify(response);
-            }
+            const summary = response.message?.content;
 
             if (!summary) {
-                createToast("error", "Error creating summary");
+                createToast("error", "Error creating summary. Please try again.");
             }
 
             await createNoteSummary(noteId, summary as string);
@@ -64,17 +61,15 @@ const SummarizeButton = ({
             disabled={disabled || !content.trim() || content.trim().length === 0}
             className="group relative inline-flex items-center justify-center px-4 py-2 bg-gray-900 border border-gray-700 rounded-lg hover:border-cyan-400/50 transition-all duration-200 disabled:opacity-50 disabled:cursor-not-allowed text-xs"
         >
-            <div className="absolute inset-0 rounded-lg bg-linear-to-r from-cyan-500/5 via-transparent to-purple-500/5 opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
-
-            <div className="absolute -inset-px rounded-lg bg-linear-to-r from-cyan-500 via-blue-500 to-purple-500 opacity-0 group-hover:opacity-30 blur-sm transition-opacity duration-300"></div>
-
+            <div className="absolute inset-0 rounded-lg bg-linear-to-r from-cyan-500/5 via-transparent to-purple-500/5 opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
+            <div className="absolute -inset-px rounded-lg bg-linear-to-r from-cyan-500 via-blue-500 to-purple-500 opacity-0 group-hover:opacity-30 blur-sm transition-opacity duration-300" />
             <div className="relative flex items-center">
                 <div className="relative">
-                    <div className="absolute inset-0 bg-cyan-500 rounded-full blur-sm opacity-0 group-hover:opacity-50 transition-opacity"></div>
+                    <div className="absolute inset-0 bg-cyan-500 rounded-full blur-sm opacity-0 group-hover:opacity-50 transition-opacity" />
                 </div>
                 <span className="bg-linear-to-r from-cyan-300 to-blue-300 bg-clip-text text-transparent font-semibold flex items-center gap-1.5">
-                    <Sparkles className="size-4 text-cyan-300" />
-                    {disabled ? 'Summarizing...' : 'Summarize'}
+                    <Sparkles className={`size-4 text-cyan-300 ${isSummarizing && "animate-pulse"}`} />
+                    {isSummarizing ? 'Summarizing...' : 'Summarize'}
                 </span>
             </div>
         </button>

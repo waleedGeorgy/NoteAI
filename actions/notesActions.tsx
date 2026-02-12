@@ -66,7 +66,7 @@ export const updateNote = async (prevState: unknown, formData: FormData): Promis
     }
 
     const { data: updatedNote, error } = await supabase.from("notes")
-        .update({ title, content, summary: null })
+        .update({ title, content })
         .eq('id', id)
         .eq('user_id', data.user?.id)
         .select().single();
@@ -108,7 +108,10 @@ export const deleteNote = async (prevState: unknown, formData: FormData): Promis
     return res;
 }
 
-export async function createNoteSummary(id: string, summary: string) {
+export async function createNoteSummary(id: string, summary: string):
+    Promise<
+        { success: boolean; summary: string }
+    > {
     const supabase = await createClient();
     if (!id || !summary) {
         throw new Error('Missing note ID or summary');

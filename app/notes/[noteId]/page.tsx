@@ -13,10 +13,10 @@ import { Note } from "@/utils/types";
 import { deleteNote, updateNote } from "@/actions/notesActions";
 
 const NoteDetailsPage = () => {
+    const { noteId } = useParams<{ noteId: string }>();
+
     const [note, setNote] = useState<Note>();
     const [isSummarizing, setIsSummarizing] = useState<boolean>(false);
-
-    const { noteId } = useParams<{ noteId: string }>();
 
     const router = useRouter();
 
@@ -69,6 +69,7 @@ const NoteDetailsPage = () => {
     };
 
     if (!note) {
+        // TODO: add loading skeleton
         return (
             <div className="min-h-screen flex flex-row flex-1 items-center justify-center ">
                 <svg className="mr-3 size-6 animate-spin text-indigo-300" viewBox="0 0 24 24" aria-hidden="true">
@@ -81,7 +82,7 @@ const NoteDetailsPage = () => {
     }
 
     return (
-        <section className="relative py-8 lg:px-16 px-8">
+        <section className="relative py-8 lg:px-14 px-8">
             <nav className="mb-4 text-sm text-gray-400">
                 <Link className="hover:text-gray-200 transition-colors duration-200 flex items-center gap-1.5" href="/dashboard"><ArrowLeftSquare className="size-5" />Back to dashboard</Link>
             </nav>
@@ -106,6 +107,7 @@ const NoteDetailsPage = () => {
                                     onSummaryGenerated={handleSummaryGenerated}
                                     setIsSummarizing={setIsSummarizing}
                                     disabled={actionsDisabled}
+                                    isSummarizing={isSummarizing}
                                 />
                             </form>
 
@@ -163,10 +165,15 @@ const NoteDetailsPage = () => {
                     ) : (
                         <div className="flex flex-col gap-4">
                             <div className="flex items-center justify-between gap-1">
-                                <h2 className="text-sm font-semibold flex items-center gap-2 text-indigo-400">
-                                    <Sparkles className="size-4 text-indigo-400" />
-                                    AI Summary
-                                </h2>
+                                <div className="flex items-center gap-1">
+                                    <h2 className="text-sm font-semibold flex items-center gap-2 bg-linear-to-r from-cyan-300 to-blue-300 bg-clip-text text-transparent">
+                                        <Sparkles className="size-4 text-cyan-300" />
+                                        AI Summary
+                                    </h2>
+                                    {note.summarized_at && note.updated_at >= note.summarized_at &&
+                                        <span className="text-xs font-semibold text-gray-400">(outdated)</span>
+                                    }
+                                </div>
                                 <span className="text-xs text-gray-400 flex items-center gap-1 font-mono">
                                     <p className="font-semibold">Generated at:</p>
                                     {note.summarized_at &&

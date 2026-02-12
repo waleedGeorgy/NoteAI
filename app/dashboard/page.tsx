@@ -87,7 +87,7 @@ const DashboardPage = () => {
                     </div>
                     {!userEmail ?
                         <div className="flex items-center gap-1.5">
-                            <Loader2 className="size-5 animate-spin text-gray-500" />
+                            <Loader2 className="size-4 animate-spin text-gray-500" />
                             <span className="font-light text-gray-500">Loading user info</span>
                         </div>
                         :
