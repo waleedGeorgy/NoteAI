@@ -18,7 +18,7 @@ import Logo from "@/app/icon.png";
 const DashboardPage = () => {
     const [userEmail, setUserEmail] = useState<string>('');
     const [notes, setNotes] = useState<Note[]>();
-    const [isNotesLoading, setIsNotesLoading] = useState<boolean>();
+    const [isNotesLoading, setIsNotesLoading] = useState<boolean>(false);
     const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
     const [deletingNoteId, setDeletingNoteId] = useState<string>();
 
@@ -38,6 +38,7 @@ const DashboardPage = () => {
     useEffect(() => {
         const fetchNotes = async () => {
             setIsNotesLoading(true);
+
             const { data: dbNotes, error } = await supabase
                 .from("notes")
                 .select("id, title, content, created_at, updated_at, summary")
@@ -48,9 +49,10 @@ const DashboardPage = () => {
             } else {
                 setNotes(dbNotes);
             }
-            router.refresh();
-            setIsNotesLoading(false);
             setIsModalOpen(false);
+            setIsNotesLoading(false);
+
+            router.refresh();
         }
         fetchNotes();
 
@@ -115,10 +117,7 @@ const DashboardPage = () => {
                     <p className="mt-1 text-sm text-gray-400">Add a new note to your collection</p>
                 </div>
 
-                <form
-                    action={addNotesAction}
-                    className="space-y-4"
-                >
+                <form action={addNotesAction} className="space-y-4">
                     <div>
                         <label htmlFor="modal-title" className="mb-1 block text-sm text-gray-300">
                             Title
@@ -208,7 +207,8 @@ const DashboardPage = () => {
                                 {note.created_at !== note.updated_at &&
                                     <time>
                                         <span className="font-semibold">Last updated:</span>{" "}
-                                        {formatDistanceToNow(new Date(note.updated_at), { addSuffix: true })}                                    </time>
+                                        {formatDistanceToNow(new Date(note.updated_at), { addSuffix: true })}
+                                    </time>
                                 }
                             </div>
                         </li>

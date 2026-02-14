@@ -59,9 +59,8 @@ const NoteDetailsPage = () => {
 
     const handleSummaryGenerated = (newSummary: string) => {
         setNote(prev => {
-            if (!prev) return prev;
             return {
-                ...prev,
+                ...prev!,
                 summary: newSummary,
                 summarized_at: new Date().toISOString()
             };

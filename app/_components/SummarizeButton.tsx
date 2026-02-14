@@ -35,7 +35,6 @@ const SummarizeButton = ({
             const response = await puter.ai.chat(`Summarize the following note concisely and expertly while preserving the key points and answering any questions:\n\n${content}`);
 
             const summary = response.message?.content;
-
             if (!summary) {
                 createToast("error", "Error creating summary. Please try again.");
             }
