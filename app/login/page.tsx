@@ -1,10 +1,10 @@
 'use client'
-import Link from "next/link";
 import { useActionState, useEffect } from "react";
+import Link from "next/link";
+import { redirect } from "next/navigation";
 import SubmitButton from "../_components/SubmitButton";
 import { login } from "@/actions/usersActions";
 import { createToast } from "@/utils/createToast";
-import { redirect } from "next/navigation";
 
 const LoginPage = () => {
     const [loginState, loginAction, isLoggingIn] = useActionState(login, null);
