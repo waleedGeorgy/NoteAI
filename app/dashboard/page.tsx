@@ -173,9 +173,10 @@ const DashboardPage = () => {
                 :
                 (<ul className="grid grid-cols-1 gap-4 md:grid-cols-2 items-start">
                     {notes?.map((note) => (
-                        <li
+                        <Link
                             className="rounded-lg border border-white/10 bg-white/5 px-5 py-4 backdrop-blur-xl hover:bg-linear-to-br hover:from-white/7 hover:to-indigo-500/15 transition duration-300 group"
                             key={note.id}
+                            href={`/notes/${note.id}`}
                         >
                             <div className="flex items-start justify-between gap-2">
                                 <Link href={`/notes/${note.id}`} className="text-xl font-semibold text-gray-100 line-clamp-2 group-hover:underline underline-offset-2 group-hover:text-indigo-300">
@@ -183,10 +184,10 @@ const DashboardPage = () => {
                                 </Link>
                                 <div className="flex items-center gap-1.5">
                                     {note.summary && <Sparkles className="size-4 text-indigo-400 mr-1" />}
-                                    <Link href={`/notes/${note.id}`} className={`rounded-lg border border-indigo-500/30 bg-indigo-500/25 px-3 py-2 text-xs text-indigo-100 hover:bg-indigo-500/35 focus:outline-none focus:ring-2 focus:ring-indigo-500/40 transition-colors duration-200 disabled:opacity-50 disabled:cursor-not-allowed ${isNoteDeleting && "pointer-events-none opacity-50"}`} title="Edit note" aria-disabled={isNoteDeleting}>
+                                    <div className={`rounded-lg border border-indigo-500/30 bg-indigo-500/25 px-3 py-2 text-xs text-indigo-100 hover:bg-indigo-500/35 focus:outline-none focus:ring-2 focus:ring-indigo-500/40 transition-colors duration-200 disabled:opacity-50 disabled:cursor-not-allowed ${isNoteDeleting && "pointer-events-none opacity-50"}`} title="Edit note" aria-disabled={isNoteDeleting}>
                                         <Edit className="size-4 " />
-                                    </Link>
-                                    <form action={noteDeleteAction}>
+                                    </div>
+                                    <form action={noteDeleteAction} onClick={(e) => e.stopPropagation()}>
                                         <input type="hidden" name="id" value={note.id} />
                                         <DeleteButton
                                             isNoteDeleting={isNoteDeleting}
@@ -211,7 +212,7 @@ const DashboardPage = () => {
                                     </time>
                                 }
                             </div>
-                        </li>
+                        </Link>
                     ))}
                 </ul>)
             }
