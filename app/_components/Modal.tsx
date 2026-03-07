@@ -18,7 +18,6 @@ const Modal = ({ isOpen, isNoteAdding, onClose, children }: ModalProps) => {
                 className="absolute inset-0 bg-black/20 backdrop-blur-sm animate-fadeIn"
                 onClick={onClose}
             />
-
             <div className="relative z-10 w-full max-w-lg rounded-xl border border-white/10 bg-zinc-900 p-6 shadow-2xl animate-slideUp">
                 <button
                     onClick={onClose}

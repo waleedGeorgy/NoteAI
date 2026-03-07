@@ -16,10 +16,10 @@ import DeleteButton from "../_components/DeleteButton";
 import Logo from "@/app/icon.png";
 
 const DashboardPage = () => {
-    const [userEmail, setUserEmail] = useState<string>('');
+    const [userEmail, setUserEmail] = useState('');
     const [notes, setNotes] = useState<Note[]>();
-    const [isNotesLoading, setIsNotesLoading] = useState<boolean>(false);
-    const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
+    const [isNotesLoading, setIsNotesLoading] = useState(false);
+    const [isModalOpen, setIsModalOpen] = useState(false);
     const [deletingNoteId, setDeletingNoteId] = useState<string>();
 
     const [addNotesState, addNotesAction, isNoteAdding] = useActionState(addNote, {});

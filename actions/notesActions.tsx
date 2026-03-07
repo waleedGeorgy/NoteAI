@@ -108,11 +108,9 @@ export const deleteNote = async (prevState: unknown, formData: FormData): Promis
     return res;
 }
 
-export async function createNoteSummary(id: string, summary: string):
-    Promise<
-        { success: boolean; summary: string }
-    > {
+export async function createNoteSummary(id: string, summary: string): Promise<{ success: boolean; summary: string }> {
     const supabase = await createClient();
+
     if (!id || !summary) {
         throw new Error('Missing note ID or summary');
     }

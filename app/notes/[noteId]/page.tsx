@@ -16,7 +16,7 @@ const NoteDetailsPage = () => {
     const { noteId } = useParams<{ noteId: string }>();
 
     const [note, setNote] = useState<Note>();
-    const [isSummarizing, setIsSummarizing] = useState<boolean>(false);
+    const [isSummarizing, setIsSummarizing] = useState(false);
 
     const router = useRouter();
 
@@ -163,7 +163,7 @@ const NoteDetailsPage = () => {
                         </p>
                     ) : (
                         <div className="flex flex-col gap-4">
-                            <div className="flex items-center justify-between gap-1">
+                            <div className="flex items-center justify-between gap-2 flex-wrap">
                                 <div className="flex items-center gap-1">
                                     <h2 className="text-sm font-semibold flex items-center gap-2 bg-linear-to-r from-cyan-300 to-blue-300 bg-clip-text text-transparent">
                                         <Sparkles className="size-4 text-cyan-300" />
