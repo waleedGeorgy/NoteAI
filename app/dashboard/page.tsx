@@ -3,7 +3,7 @@ import { useActionState, useEffect, useState } from "react";
 import Link from "next/link";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
-import { Edit, Loader2, PlusCircle, Sparkles, User } from "lucide-react";
+import { Loader2, PlusCircle, Sparkles, User } from "lucide-react";
 import { formatDistanceToNow } from "date-fns";
 import { addNote, deleteNote } from "@/actions/notesActions";
 import { supabase } from "@/utils/supabase/client";
@@ -28,11 +28,12 @@ const DashboardPage = () => {
     const router = useRouter();
 
     useEffect(() => {
-        const getCurrentUser = async () => {
+        const getCurrentUserEmail = async () => {
             const { data } = await supabase.auth.getUser();
-            if (data.user) setUserEmail(data.user.email as string);
+            if (!data.user) throw new Error();
+            setUserEmail(data.user.email as string);
         }
-        getCurrentUser();
+        getCurrentUserEmail();
     }, []);
 
     useEffect(() => {
@@ -179,14 +180,11 @@ const DashboardPage = () => {
                             href={`/notes/${note.id}`}
                         >
                             <div className="flex items-start justify-between gap-2">
-                                <Link href={`/notes/${note.id}`} className="text-xl font-semibold text-gray-100 line-clamp-2 group-hover:underline underline-offset-2 group-hover:text-indigo-300">
+                                <span className="text-xl font-semibold text-gray-100 line-clamp-2 group-hover:underline underline-offset-2 group-hover:text-indigo-300">
                                     {note.title}
-                                </Link>
+                                </span>
                                 <div className="flex items-center gap-1.5">
                                     {note.summary && <Sparkles className="size-4 text-indigo-400 mr-1" />}
-                                    <div className={`rounded-lg border border-indigo-500/30 bg-indigo-500/25 px-3 py-2 text-xs text-indigo-100 hover:bg-indigo-500/35 focus:outline-none focus:ring-2 focus:ring-indigo-500/40 transition-colors duration-200 disabled:opacity-50 disabled:cursor-not-allowed ${isNoteDeleting && "pointer-events-none opacity-50"}`} title="Edit note" aria-disabled={isNoteDeleting}>
-                                        <Edit className="size-4 " />
-                                    </div>
                                     <form action={noteDeleteAction} onClick={(e) => e.stopPropagation()}>
                                         <input type="hidden" name="id" value={note.id} />
                                         <DeleteButton

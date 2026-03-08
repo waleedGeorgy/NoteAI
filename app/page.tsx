@@ -1,6 +1,6 @@
 import Link from "next/link";
-import { BrainCircuit, LockKeyhole, LogIn, UserPlus } from "lucide-react";
 import Image from "next/image";
+import { BrainCircuit, LockKeyhole, LogIn, UserPlus } from "lucide-react";
 import Logo from "@/app/icon.png";
 
 const HomePage = async () => {
